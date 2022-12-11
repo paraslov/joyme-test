@@ -16,7 +16,7 @@ const db = {
 }
 
 app.get('/', (req, res) => {
-  res.send('Hello World, toys!')
+  res.send('Hello boys! Let\' practice a little')
 })
 
 app.get('/joyme', (req, res) => {
