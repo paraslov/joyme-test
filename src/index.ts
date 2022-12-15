@@ -1,5 +1,6 @@
 import express from 'express'
 import { dailiesRouter } from './routes/dailies-router'
+import { DailiesViewModel } from './models/dailies/DailiesViewModel'
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -7,12 +8,12 @@ const port = process.env.PORT || 5000
 const parseBodyMiddleware = express.json()
 app.use(parseBodyMiddleware)
 
-export const db = {
+export const db: { dailies: DailiesViewModel[] } = {
   dailies: [
-    { id: 1, name: 'Walking', exp: 13000 },
-    { id: 2, name: 'Warm up', exp: 7000 },
-    { id: 3, name: 'Job', exp: 26000 },
-    { id: 4, name: 'NLP', exp: 17000 },
+    { id: 1, title: 'Walking', exp: 13000 },
+    { id: 2, title: 'Warm up', exp: 7000 },
+    { id: 3, title: 'Job', exp: 26000 },
+    { id: 4, title: 'NLP', exp: 17000 },
   ]
 }
 

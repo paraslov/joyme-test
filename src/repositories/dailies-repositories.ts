@@ -1,11 +1,12 @@
 import { db } from '../index'
+import { DailiesViewModel } from '../models/dailies/DailiesViewModel'
 
 export const dailiesRepositories = {
   getDailies(searchTerm: string | undefined) {
-    let dailies = db.dailies
+    let dailies = [...db.dailies]
 
     if (searchTerm) {
-      dailies = db.dailies.filter(d => d.name.indexOf(searchTerm) > -1)
+      dailies = db.dailies.filter(d => d.title.indexOf(searchTerm) > -1)
     }
 
     return dailies
@@ -13,17 +14,18 @@ export const dailiesRepositories = {
   findDailyById(id: number) {
     return db.dailies.find(d => d.id === Number(id))
   },
-  createNewDaily(name: string, exp: number) {
-    if (name && exp) {
-      const newDaily = { id: +new Date(), name, exp }
+  createNewDaily(title: string, exp: number) {
+    if (title && exp) {
+      const newDaily: DailiesViewModel = { id: +new Date(), title, exp }
       db.dailies.push(newDaily)
       return newDaily
     }
     return null
   },
-  updateDaily(id: number, name: string, exp: number) {
-    if (db.dailies.some(daily => daily.id === id) && name && exp) {
-      db.dailies = db.dailies.map(d => d.id === id ? {...d, name, exp} : d)
+  updateDaily(payload: DailiesViewModel) {
+    const { id, title, exp } = payload
+    if (db.dailies.some(daily => daily.id === id) && title && exp) {
+      db.dailies = db.dailies.map(d => d.id === id ? {...d, title, exp} : d)
       return true
     }
     return false
