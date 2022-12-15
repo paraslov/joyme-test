@@ -24,7 +24,7 @@ app.get('/joyme', (req, res) => {
   res.json('Hello Joyme!')
 })
 app.get('/version', (req, res) => {
-  res.json('Joyme backend: v1.04')
+  res.json('Joyme backend: v0.04')
 })
 
 app.use('/dailies', dailiesRouter)
