@@ -5,6 +5,7 @@ import { DailiesViewModel } from '../models/dailies/DailiesViewModel'
 import { IdParamsModel } from '../models/URIParamsModel'
 import { DailiesQueryModel } from '../models/dailies/DailiesQueryModel'
 import { DailiesBodyModel } from '../models/dailies/DailiesBodyModel'
+import { HttpStatusCode } from '../enums/HttpStatusCodes'
 
 export const dailiesRouter = Router()
 
@@ -19,14 +20,16 @@ dailiesRouter.get('/:id', (
   req: RequestParams<IdParamsModel>,
   res: Response<DailiesViewModel>) => {
   const foundDaily = dailiesRepositories.findDailyById(Number(req.params.id))
-  foundDaily ? res.json(foundDaily) : res.sendStatus(404)
+  foundDaily ? res.json(foundDaily) : res.sendStatus(HttpStatusCode.NOT_FOUND_404)
 })
 
 dailiesRouter.post('/', (
   req: RequestBody<DailiesBodyModel>,
   res: Response<DailiesViewModel>) => {
   const newDaily = dailiesRepositories.createNewDaily(req.body.title, req.body.exp)
-  newDaily ? res.status(201).json(newDaily) : res.sendStatus(400)
+  newDaily
+    ? res.status(HttpStatusCode.CREATED_201).json(newDaily)
+    : res.sendStatus(HttpStatusCode.BAD_REQUEST_400)
 })
 
 dailiesRouter.put('/:id', (
@@ -39,9 +42,9 @@ dailiesRouter.put('/:id', (
   })
   if (isDailyUpdated) {
     const updatedDaily = dailiesRepositories.findDailyById(Number(req.params.id))
-    res.status(200).json(updatedDaily)
+    res.status(HttpStatusCode.OK_200).json(updatedDaily)
   } else {
-    res.sendStatus(400)
+    res.sendStatus(HttpStatusCode.BAD_REQUEST_400)
   }
 })
 
@@ -49,5 +52,7 @@ dailiesRouter.delete('/:id', (
   req: RequestParams<IdParamsModel>,
   res) => {
   const isDailyDeleted = dailiesRepositories.deleteDaily(Number(req.params.id))
-  isDailyDeleted ? res.sendStatus(204) : res.sendStatus(404)
+  isDailyDeleted
+    ? res.sendStatus(HttpStatusCode.NO_CONTENT_204)
+    : res.sendStatus(HttpStatusCode.NOT_FOUND_404)
 })

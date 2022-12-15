@@ -1,6 +1,7 @@
 import express from 'express'
 import { dailiesRouter } from './routes/dailies-router'
 import { DailiesViewModel } from './models/dailies/DailiesViewModel'
+import { RoutesList } from './routes'
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -17,17 +18,17 @@ export const db: { dailies: DailiesViewModel[] } = {
   ]
 }
 
-app.get('/', (req, res) => {
+app.get(RoutesList.BASE, (req, res) => {
   res.json('Hello boys! Let\' practice a little')
 })
-app.get('/joyme', (req, res) => {
+app.get(RoutesList.JOYME, (req, res) => {
   res.json('Hello Joyme!')
 })
-app.get('/version', (req, res) => {
-  res.json('Joyme backend: v0.04')
+app.get(RoutesList.VERSION, (req, res) => {
+  res.json('Joyme backend: v0.05')
 })
 
-app.use('/dailies', dailiesRouter)
+app.use(RoutesList.DAILIES, dailiesRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
