@@ -26,7 +26,7 @@ app.get(RoutesList.JOYME, (req, res) => {
   res.json('Hello Joyme!')
 })
 app.get(RoutesList.VERSION, (req, res) => {
-  res.json('Joyme backend: v0.05')
+  res.json('Joyme backend: v0.08')
 })
 
 app.use(RoutesList.DAILIES, dailiesRouter)
