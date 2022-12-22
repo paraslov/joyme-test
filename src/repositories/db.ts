@@ -1,8 +1,12 @@
 import { MongoClient } from 'mongodb'
+import { DailiesViewModel } from '../models/dailies/DailiesViewModel'
 
+const uri = process.env.mongoURI || "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
 
-const uri = process.env.mongoURI || null;
-const client = uri && new MongoClient(uri);
+export const client = new MongoClient(uri);
+
+const joymeTestDB = client.db(('joyme_test'))
+export const dailiesTestCollection = joymeTestDB.collection<DailiesViewModel>('dailies_test');
 
 export const runDB = async () => {
   if (!client) return
