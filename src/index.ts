@@ -23,7 +23,7 @@ app.get(RoutesList.BASE, (req, res) => {
   res.json('Hello boys! Let\'s practice a little')
 })
 app.get(RoutesList.JOYME, (req, res) => {
-  res.json('Hello Joyme!')
+  res.json(`Hello Joyme! ${process.env.GREETINGS || 'no env vars here'}`)
 })
 app.get(RoutesList.VERSION, (req, res) => {
   res.json('Joyme backend: v0.08')
