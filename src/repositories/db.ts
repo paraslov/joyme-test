@@ -2,7 +2,6 @@ import { MongoClient } from 'mongodb'
 import { DailiesViewModel } from '../models/dailies/DailiesViewModel'
 
 const uri = process.env.mongoURI || "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
-
 export const client = new MongoClient(uri);
 
 const joymeTestDB = client.db(('joyme_test'))

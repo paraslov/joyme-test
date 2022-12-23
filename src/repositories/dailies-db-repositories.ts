@@ -12,16 +12,11 @@ export const dailiesRepositories = {
     return dailiesTestCollection.find(filter).toArray()
   },
   async findDailyById(id: number): Promise<DailiesViewModel | null> {
-    return await dailiesTestCollection.findOne({id})
+    return dailiesTestCollection.findOne({id})
   },
-  async createNewDaily(title: string, exp: number): Promise<DailiesViewModel | null> {
-    if (title && exp) {
-      const newDaily: DailiesViewModel = { id: +new Date(), title, exp }
-      await dailiesTestCollection.insertOne(newDaily)
-
-      return newDaily
-    }
-    return null
+  async createNewDaily(newDaily: DailiesViewModel): Promise<DailiesViewModel | null> {
+    await dailiesTestCollection.insertOne(newDaily)
+    return newDaily
   },
   async updateDaily(payload: DailiesViewModel): Promise<boolean> {
     const { id, title, exp } = payload
